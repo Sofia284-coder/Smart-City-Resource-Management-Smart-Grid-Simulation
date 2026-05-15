@@ -87,25 +87,8 @@ SmartCityManagement/
                     │   └── CityRepository.java
                     │
                     └── gui/
-                        ├── GuiContext.java
-                        ├── DisplayUpdater.java
                         ├── SmartCityGUI.java
-                        │
-                        └── panels/
-                            ├── BasePanel.java
-                            ├── ResourceManagementPanel.java
-                            ├── BusPanel.java
-                            ├── TrainPanel.java
-                            ├── PowerStationPanel.java
-                            ├── PolicePanel.java
-                            ├── FireDepartmentPanel.java
-                            ├── AmbulancePanel.java
-                            ├── SmartGridPanel.java
-                            ├── HouseholdConsumerPanel.java
-                            ├── IndustryConsumerPanel.java
-                            ├── CityZonesPanel.java
-                            ├── ReportsPanel.java
-                            └── AlertsPanel.java
+                        
 ```
 
 ---
@@ -116,16 +99,11 @@ The codebase is divided into four layers that only ever communicate downward —
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                   gui/panels/                   │  ← One file per tab/sub-tab
-│  BusPanel  TrainPanel  PowerStationPanel  ...   │
-│               extend BasePanel                  │
+│                   gui                           │  ← GUI
+│                                                 │
+│                                                 │
 └────────────────────┬────────────────────────────┘
                      │ reads/writes via
-          ┌──────────▼──────────┐
-          │     GuiContext      │  ← Single shared state object
-          │  DisplayUpdater     │  ← All screen-refresh logic
-          │  SmartCityGUI       │  ← Window orchestrator + Save/Load
-          └──────────┬──────────┘
                      │ calls
           ┌──────────▼──────────┐
           │    repository/      │  ← Generic CRUD + serialization
@@ -135,18 +113,14 @@ The codebase is divided into four layers that only ever communicate downward —
           ┌──────────▼──────────┐
           │      model/         │  ← Pure Java, zero GUI imports
           │  interfaces/        │
+          |  services/
           └─────────────────────┘
 ```
 
 ### Key design decisions
 
-**`GuiContext`** is the single source of truth for shared mutable state — the repository, SmartGrid, zones map, all table models, and all text areas. Every panel receives a `GuiContext` reference. No panel holds its own copy of the data.
 
-**`DisplayUpdater`** owns every screen-refresh method. After any data mutation, a panel calls `updater.refreshAll()` and every other panel's display automatically reflects the change. No panel calls another panel directly.
-
-**`BasePanel`** is the superclass of every CRUD panel. It provides shared layout helpers (`buildFormPanel`, `buildButtonPanel`), `clearFields`, and the three error dialogs (`showInputError`, `showUpdateError`, `showDeleteError`), eliminating duplication across 10+ panels.
-
-**`SmartCityGUI`** is an orchestrator only — it creates the context, instantiates panels, wires tab-change listeners, and handles Save/Load. No business logic lives there.
+**`SmartCityGUI`** contains everything GUI related, all the CRUD panels and business logic pf simlating power outage etc.
 
 **The model layer** has zero Swing imports. `CityResource`, `SmartGrid`, `CityZone`, and `CityRepository` are plain Java and could be reused in a web or CLI context without modification.
 
