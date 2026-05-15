@@ -1,0 +1,10 @@
+package main.java.com.smartcity.models;
+
+import main.java.com.smartcity.interfaces.Alertable;
+import main.java.com.smartcity.interfaces.Reportable;
+
+public abstract class EmergencyService extends CityResource implements Reportable, Alertable {
+    public EmergencyService(String resourceID, String location, String status) {
+        super(resourceID, location, status);
+    }
+}
