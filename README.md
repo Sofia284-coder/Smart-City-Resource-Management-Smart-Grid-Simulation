@@ -200,34 +200,17 @@ Generic in-memory store with full CRUD and serialization-based persistence.
 
 ### `gui/`
 
-#### `GuiContext`
-Passed to every panel on construction. Contains:
-- `repository` — the `CityRepository` instance
-- `smartGrid` — the `SmartGrid` instance
-- `cityZonesMap` — `Map<String, CityZone>` of all zones
-- All eight `DefaultTableModel` instances (one per resource/consumer type)
-- All five `JTextArea` instances shared across tabs
-- `tabbedPane` — injected after construction for change-listener hooks
 
-#### `DisplayUpdater`
-All display-refresh methods in one place. Panels must not refresh other panels directly.
-
-| Method | What it refreshes |
-|---|---|
-| `refreshAll()` | Resource tables, all-resources text area, smart grid display, zone list |
-| `refreshSmartGridDisplay()` | Energy stats text area and consumer table models |
 
 #### `SmartCityGUI`
-Thin orchestrator (~120 lines). Creates `GuiContext` and `DisplayUpdater`, instantiates all panels, builds the `JTabbedPane`, attaches a tab-change listener to refresh the zone combo box in `PowerStationPanel`, and handles the File → Save/Load menu actions.
+Main entry point of GUI
 
 ---
 
-### `gui/panels/`
+### `gui CRUD panels/`
 
 | Class | Tab | Description |
 |---|---|---|
-| `BasePanel` | — | Abstract superclass. Provides `buildFormPanel()`, `buildButtonPanel()`, `clearFields()`, and three error-dialog helpers. |
-| `ResourceManagementPanel` | Resource Management | Hosts Bus, Train, Power Station, and Emergency Services sub-tabs. Carries a `public powerStationPanel` field so `SmartCityGUI` can trigger zone combo refreshes. |
 | `BusPanel` | → Buses | Full CRUD for `Bus`. Table row click loads the form. |
 | `TrainPanel` | → Trains | Full CRUD for `Train`. |
 | `PowerStationPanel` | → Power Stations | Full CRUD for `PowerStation` + Trigger Outage button. Zone combo box populated from `cityZonesMap`. |
