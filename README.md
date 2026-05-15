@@ -207,7 +207,7 @@ Main entry point of GUI
 
 ---
 
-### `gui CRUD panels/`
+### `gui CRUD panels`
 
 | Class | Tab | Description |
 |---|---|---|
@@ -257,13 +257,13 @@ java -cp out com.smartcity.SmartCityApp
 
 1. **File → Open** → select the `SmartCityManagement` folder.
 2. Right-click `src/main/java` → **Mark Directory as → Sources Root**.
-3. Open `SmartCityApp.java` → click the green ▶ button.
+3. Open `SmartCityGUI.java` → click the green ▶ button.
 
 ### VS Code
 
 1. Install the **Extension Pack for Java** from the marketplace.
 2. Open the `SmartCityManagement` folder.
-3. Open `SmartCityApp.java` → click **Run** above the `main` method.
+3. Open `SmartCityGUI.java` → click **Run** above the `main` method.
 
 ---
 
