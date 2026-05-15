@@ -121,16 +121,6 @@ public SmartCityGUI() {
     
 }
 
-    // Main method
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new SmartCityGUI().setVisible(true);
-        });
-    }
-
-
-    
-
     private JPanel createResourceManagementPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
